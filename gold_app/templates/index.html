@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+    <div id="header">
+        Your Gold: {{ request.session.total_gold }}
+    </div>
+
+    <div id="forms">
+
+        <div class="properties">
+            <h1>Farm</h1>
+            <p>earns 10-20 golds</p>
+            <form action="/process_money" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="building" value="farm">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+
+        <div class="properties">
+            <h1>Cave</h1>
+            <p>earns 5-10 golds</p>
+            <form action="/process_money" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="building" value="cave">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+
+        <div class="properties">
+            <h1>House</h1>
+            <p>earns 2-5 golds</p>
+            <form action="/process_money" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="building" value="house">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+
+        <div class="properties">
+            <h1>Casino</h1>
+            <p>earns 0-50 golds</p>
+            <form action="/process_money" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="building" value="casino">
+                <input type="submit" value="Find Gold!">
+            </form>
+        </div>
+
+    </div>
+
+    <div id="activities">
+        <p>Activities:</p>
+        {% for log in request.session.activities reversed %}
+            {% if "lost" in log %}
+                <p>{{ log }}</p>
+            {% else %}
+                <p>{{ log }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</body>
+</html>
